@@ -1,0 +1,14 @@
+事务:
+create table drive(
+id int
+)engine = innodb;
+
+
+begin;  # 开始事务
+insert into runoob_transaction_test value(5);
+commit; # 提交事务
+
+begin;    # 开始事务
+insert into runoob_transaction_test values(7);
+rollback;   # 回滚
+select * from runoob_transaction_test;   # 因为回滚所以数据没有插入

@@ -1,0 +1,134 @@
+create table student(
+Sno int not null primary key auto_increment,
+Sname varchar(20) not null,
+Ssex varchar(10) not null,
+Sbirthday datetime null,
+Class varchar（20)not nullengine = myisam default charset = utf8;
+
+
+insert into student(Sname,Ssex,Sbirthday,Class) values ('aaa','nan','1991-1-1','yiban');
+insert into student values (null,'aaa','nan','1991-1-1','yiban');
+
+
+
+insert into student(Sname,Ssex,Sbirthday,Class) values('Rick','woman','2018-02-01','third');
+
+insert into teacher(Sname,Ssex,Sbirthday,Class) values('rick','man','2019-01-02','third');
+
+
+打开:mysql -uroot -p
+查询显示内容： select * from student；
+
+
+create table teacher(tno int not null primary key auto_increment,tname varchar(20) not null,tsex varchar(20) not null,tbirthday datetime null,prof varchar(20) not null,depart varchar(20) not null)engine = myisam default charset = utf8;
+
+
+
+create table course(
+Cid int not null primary key auto_increment,
+score varchar(20) not null,
+Cname varchar(20) not null)engine = myisam default charset = utf8;
+
+insert into course values(null,'计算机组组成原理','1');
+insert into course values(null,'数学','2');
+insert into course values(null,'物理','3');insert into score values(null,'1','3','82');
+
+
+
+select * from score where sno = (select sno from student where sname='赵雷');
+
+
+创建doctor表:
+create table docter(
+id int not null primary key auto_increment,
+Dname varchar(20) not null,
+Dsex varchar(10) not null,
+Dnirthday datetime null)engine = myisam default charset = utf8;
+
+增
+insert into student values(null,'','','',);
+删
+delete from student where Sname = '赵雷';
+改
+update course set score = '计算机组成原理' where Cname = 2;
+
+----------------------------------------------------------------------------------------
+创建student表:
+create table student(
+Sname varchar(20) not null,
+Sbirthday datetime null,
+Ssex varchar(10) not null,
+Class varchar(10) not null)engine = myisam default charset = utf8;
+添加:
+insert into student(Sname,Sbirthday,Ssex,Class) values('赵雷','1991-01-01','男','一班');
+insert into student (Sname,Sbirthday,Ssex,Class) values('赵宇','1991-02-01','男','二班');
+insert into student(Sname,Sbirthday,Ssex,class) values('孙峰','1990-03-03','男','二班');
+insert into student values('李云','1990-04-04','男','一班');
+insert into student values('周梅','1991-05-05','女','一班');
+insert into student values('吴兰','1990-06-06','女','二班');
+insert into student values('郑竹','1990-07-07','女','二班');
+insert into student(Sname,Sbirthday,Ssex,Class) values('王菊','1991-08-03','女','二班');
+
+创建Teacher表:
+create table Teacher(
+Tname varchar(10) not null,
+Tbirthday datetime null,
+Tsex varchar(10) not null,
+Tpro varchar(20) not null,
+Tgread varchar(20) not null)engine = myisam default charset = utf8;
+
+insert into Teacher values('张三','1981-01-01','男','讲师','计算机系');
+insert into Teacher(Tname,Tbirthday,Tsex,Tpro,Tgread) values('李四','1982-03-03','男','副教授','数学系');
+insert into Teacher values('王五','1981-03-03','男','讲师','物理系');
+
+创建Course表
+create table Course(
+Sid int not null primary key auto_increment,
+Sname varchar(20) not null,
+Cno int not null,
+Score int not null)engine = myisam default charset = utf8;
+
+insert into course values(null,'计算机组成原理','1','10');
+
+
+create table city(
+id int not null primary key auto_increment,
+city varchar(64) not null,
+province varchar(128) not null)engine = innodb default charset = utf8;
+insert into city values(null,'广州',1);
+
+create table province(
+id int not null primary key auto_increment,
+province varchar(128) not null)engine = innodb default charset = utf8;
+insert into province values(null,'广东');
+
+
+
+城市id 城市名,省份
+select s1.* from city as s1,province as s2 where s1.province = s2.id;
+select s1.* from city as s1 join province as s2 on s1.province = s2.id;
+
+省份id ,名字,包含多少个城市
+select p.*,count(c.province) from province as p,city as c where c.province = p.id group by province;
+
+select p.*,count(c.province) from province as p join city as c on c.province = p.id group by province;
+
+
+create table user(
+id int not null primary key auto_increment,
+username varchar(64) not null default '',
+password varchar(128) not null default '',
+email varchar(64) not null default '')engine = innodb default charset = utf8;
+
+create table msg(
+id int not null primary key auto_increment,
+title varchar(64) not null default '',
+content text(128) not null default '',
+create_time int not null default '',
+status varchar not(128) null default '',
+user_id int not null default 0,
+index(user_id))engine = innodb default charset = utf8;
+
+select username,count(msg.user_id) as msgNum from msg as a2 join user as a1 on a2.user_id = a1.id group by user_id having msgNum > 10 order by msgNum desc;
+
+select username,count(msg.user_id) as msgNum from msg as a2,user as a1 where a2.user_id = a1.id group by user_id  having msgNum > 10 order by msgNum desc;

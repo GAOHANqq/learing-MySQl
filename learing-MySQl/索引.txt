@@ -1,0 +1,40 @@
+建表时创建索引:
+create table doctor(
+Did int not null  auto_increment,
+Dname varchar(20) not null,
+Dsex varchar(10) not null,
+Dbirthday datetime null,
+Dage int not null,
+primary key(Did),
+index(Dsex),
+unique(Dname)
+)engine = myisam default charset = utf8;
+
+
+insert into doctor values(null,'张华','男','1996-02-01','25');
+insert into doctor values(null,'王子','男','1995-05-05','27');
+insert into doctor values(null,'小龙','男','1992-02-01','24');
+insert into doctor values(null,'海马','男','1992-02-01','15');
+insert into doctor values(null,'李逵','男','1997-02-01','25');
+insert into doctor values(null,'周瑜','男','1995-02-01','35');
+
+
+添加索引:alter table doctor add index(Dage);
+删除索引:1)alter table doctor drop index Dage;
+	 2)drop index 列名 on 表名;
+
+
+查询大于24岁的男性,且按照年龄降序排序:
+select * from doctor where Dsex = '男' group by Dname having Dage > 24 order by Dage desc;
+
+
+备份数据库:
+
+在安装目录D:\mysql-8.0.11-winx64\bin>
+mysqldump -uroot -p密码 库名> database.txt  -----备份整个数据库
+
+恢复
+mysql -uroot -p密码 库名< 要恢复的数据库文件
+mysql -uroot -p wrap< D:\drive.txt
+
+

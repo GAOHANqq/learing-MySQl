@@ -1,0 +1,108 @@
+解压
+以管理员的身份进入命令提示符
+cd d:\mysql-8.0.11\bin
+mysqld install
+mysqld --initialize-insecure
+net start mysql
+mysql -uroot -p
+
+
+创建库
+create database wrap
+查看库
+show databases;
+删除库
+drop database wrap
+
+创建表
+create table student(
+id int not null primary key auto_increment,
+Sname varchar(20) not null,
+Ssex varchar(10) not null,
+Sbirthday datetime null)engine = myisam default charset = utf8;
+
+查看表
+show tables;
+插入表
+insert into student values(null,'张三','男','1996-08-16');
+修改表
+update student set Ssex = '女' where Sname = '张三';
+删除表
+delete from student where Sname = '张三';
+查询表
+select *(需要查询的) from student(where语句+查询的条件);
+select distinct 列名 from 表名    ------ 用于返回唯一不同的值 
+
+
+添加字段(即表的列)
+alter table score add Saa varchar(100) not null;
+alter table table_name add 字段名 字段类型
+删除字段
+alter table student drop column address;
+修改字段类型
+alter table student modify column address varchar(90);
+修改字段名称
+alert table student change address addressss varchar
+
+条件查询
+1)>  < =    !=与<>都表示不等于 
+2)between and ----- select Sid,sno from score where score between 82 and 90;
+3)in(查询满足条件得值) ---select Cno,Sno from Score where Score in('1','20','72','70','80'); 
+
+通过by的值分组查询(注意group by前面要加函数)
+select sno,sum(score) from score group by sno;
+
+select * from score limit 4,8;
+limit是mysql的语法
+select * from table limit m,n
+其中m是指记录开始的index，从0开始，表示第一条记录
+n是指从第m+1条开始，取n条。
+select * from tablename limit 2,4
+即取出第3条至第6条，4条记录
+
+having  与where一样
+select * from student having Ssex = '女';
+
+
+
+查询两门及两门以上同学的不及格的平均分
+select avg(score)from score where score < 60 group by sno having count(score)>=2;
+select avg(score) as sc,sum(score<60) as num,sno from score where score< 60 group by sno having num >=2;
+升序：select * from student order by Sbirthday asc(可省略);
+降序：select * from student order by Sbirthday desc;
+
+
+表的关联:
+select * from student as s1 right join score as s2 on s1.sid = s2.sid;
+1)select * from student as s1 join score as s2 on s1.sid = s2.sid;这个(join  on)的效率更高
+2)select * from student as s1,score as s2 where s1.sid = s2.sid;
+
+三表关联:
+select a.*,b.*,c.* from a join b on a.id =b.id join c on b.id = c.id where b.m=n;
+第一种方法：select * from student,teacher,project where student.id=teacher.sid and student.id=project.sid;
+第二种：select * from student inner join teacher on student.id=teacher.sid inner join project on student.id=project.sid;
+
+子查询:
+select * from score where sno = (select sno from student where sname = '赵雷');
+引擎:myisam innodb
+
+
+备份数据库:
+在安装目录D:\mysql-8.0.11-winx64\bin>
+mysqldump -uroot -p密码 库名> database.txt  -----备份整个数据库
+
+恢复
+mysql -uroot -p密码 库名< 要恢复的数据库文件
+mysql -uroot -p wrap< D:\drive.txt
+
+
+
+复制表:
+CREATE TABLE targetTable LIKE sourceTable;
+INSERT INTO targetTable SELECT * FROM sourceTable;
+
+create table clone_tb like doctor;
+insert into clone_tb select * from doctor;
+
+
+

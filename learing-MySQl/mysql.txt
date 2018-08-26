@@ -1,0 +1,110 @@
+student
+insert into student values (null,'赵雷','男','1991-01-01','一班');
+insert into student values (null,'周梅','女','1991-05-05','一班');
+insert into student values (null,'赵宇','男','1991-02-01','二班');
+insert into student values (null,'吴兰','女','1990-06-06','二班');
+
+insert into student values (null,'孙峰','男','1990-03-03','二班');
+insert into student values (null,'郑竹','女','1990-07-07','二班');
+insert into student values (null,'李云','男','1990-04-04','一班');
+insert into student values (null,'王菊','女','1991-08-08','一班');
+
+teacher
+insert into teacher values (null,'张三','男','1981-01-01','讲师','计算机系');
+insert into teacher values (null,'李四','男','1982-02-02','副教授','数学系');
+insert into teacher values (null,'王五','男','1981-03-03','讲师','物理系');
+
+course
+insert into course values (null,'计算机组成原理','1');
+insert into course values (null,'数学','2');
+insert into course values (null,'物理','3');
+insert into course values (null,'化学','4');
+
+score
+insert into score values (null,'1','1','80');
+insert into score values (null,'1','2','81');
+insert into score values (null,'1','3','82');
+insert into score values (null,'2','1','80');
+insert into score values (null,'2','2','90');
+insert into score values (null,'2','3','99');
+insert into score values (null,'3','1','70');
+insert into score values (null,'3','2','50');
+insert into score values (null,'3','3','59');
+insert into score values (null,'4','1','76');
+insert into score values (null,'4','2','89');
+insert into score values (null,'4','3','92');
+insert into score values (null,'5','1','68');
+insert into score values (null,'5','2','53');
+insert into score values (null,'5','3','50');
+insert into score values (null,'6','1','79');
+insert into score values (null,'6','2','90');
+insert into score values (null,'6','3','95');
+insert into score values (null,'7','1','80');
+insert into score values (null,'7','2','86');
+insert into score values (null,'7','3','95');
+insert into score values (null,'8','1','80');
+insert into score values (null,'8','2','83');
+insert into score values (null,'8','3','90');
+
+
+
+select * from student where Class = '一班';
+select * from student where Class = '二班' and Ssex = '女'; 
+select * from teacher where Depart = '计算机系';
+select * from score where Sno = '5';
+select * from student where Sname like '%赵';
+
+
+select max(degree) from score where id='1';
+select max(degree) from score group by Sno;
+select min(degree) from score where id='1';
+select min(degree) from score group by Sno;
+select sun(degree) from score where id='1';
+select avg(degree) from score where id='1';
+select count() from score;
+
+select avg(degree) from score where degree <60 group by sno having count(score)>=2;
+select avg(score) as sc,sum(score<60) as num,sno from score group by sno having num >=2;
+
+select * from secore order by degree Desc;
+select * from secore order by degree Asc;
+
+limit
+select * from score limit 5,5;
+
+limit是mysql的语法
+select * from table limit m,n
+其中m是指记录开始的index，从0开始，表示第一条记录
+n是指从第m+1条开始，取n条。
+select * from tablename limit 2,4
+即取出第3条至第6条，4条记录
+
+
+join
+select t.*,c.cname from teacher as t join course as c on t. tno = c.tno;
+select t.*,c.cname from teacher as t left join course as c on t. tno = c.tno;
+select c.*,t.tname from course as c left join teacher as t on t. tno = c.tno;
+
+子查询
+select * from score where sno = (select sno from student where sname='赵雷';
+
+
+索引
+CREATE TABLE mytable(
+ID INT NOT NULL,
+username VARCHAR(16) NOT NULL,
+INDEX [indexName] (username(length))
+);  
+修改表结构
+ALTER table mytable ADD UNIQUE [indexName] (username(length));
+ALTER TABLE testalter_tbl ADD INDEX (c);
+创建索引
+CREATE UNIQUE INDEX indexName ON mytable(username(length)) 
+显示索引信息
+SHOW INDEX FROM table_name;
+ALTER 命令删除主键
+ALTER TABLE testalter_tbl DROP PRIMARY KEY;
+
+
+
+
