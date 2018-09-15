@@ -1,0 +1,3 @@
+*.js linguist-language=mysql
+*.css linguist-language=mysql
+*.html linguist-language=mysql
